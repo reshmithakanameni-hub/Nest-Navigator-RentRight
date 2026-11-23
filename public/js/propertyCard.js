@@ -1,0 +1,6 @@
+'use strict';
+export function propertyCard(property, state, format) {
+  const { saved, compareIds } = state;
+  const { escapeHTML, money } = format;
+  return `<article class="property"><div class="photo" style="background-image:url('${escapeHTML(property.image)}')"><span class="verified">SAMPLE LISTING · DEMO</span><span class="bhk-tag">${property.bhk} BHK</span><button class="heart ${saved.includes(property.id) ? 'saved' : ''}" data-save="${property.id}" aria-label="Save home">${saved.includes(property.id) ? '♥' : '♡'}</button></div><div class="property-body"><div class="area">${escapeHTML(property.area)}, ${escapeHTML(property.city)} · Listing #${property.id}</div><h3>${escapeHTML(property.name)}</h3><div class="meta"><span>${property.size} sq.ft.</span><span>${escapeHTML(property.furnishing)}</span><span>${property.parking ? 'Parking' : 'No parking'}</span></div><div class="price-row"><div class="price">${money(property.rent)}<small> / month</small></div><span class="area">Zero brokerage*</span></div><div class="card-actions"><button data-tour="${property.id}">360° Tour</button><button data-compare="${property.id}">${compareIds.includes(property.id) ? '✓ Added' : 'Compare'}</button><button data-details="${property.id}">Details ↗</button></div></div></article>`;
+}
