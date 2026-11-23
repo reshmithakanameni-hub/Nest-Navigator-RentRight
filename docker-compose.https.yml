@@ -1,0 +1,26 @@
+# HTTPS deployment: Caddy terminates TLS (free Let's Encrypt certificate) and proxies to the app.
+#   DOMAIN=rent.example.com docker compose -f docker-compose.yml -f docker-compose.https.yml up -d --build
+services:
+  web:
+    ports: !reset []
+    expose:
+      - "3000"
+    environment:
+      NODE_ENV: production
+      TRUST_PROXY: "true"   # trust X-Forwarded-Proto from Caddy
+      FORCE_HTTPS: "true"   # redirect any plain-HTTP request, send HSTS, mark cookies Secure
+  caddy:
+    image: caddy:2-alpine
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN to your domain name}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    restart: unless-stopped
+volumes:
+  caddy-data:

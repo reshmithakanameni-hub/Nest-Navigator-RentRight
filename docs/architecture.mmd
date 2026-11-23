@@ -1,0 +1,24 @@
+flowchart TB
+  subgraph Client["Browser (ES modules, no business rules)"]
+    UI["index.html + app.js"]
+    MODS["public/js: listings, mapSearch, tour, compare, shortlist, rentTools, visitBooking, accountWorkspace"]
+    UI --> MODS
+  end
+  subgraph Edge["Edge / TLS"]
+    PROXY["Caddy or platform load balancer (HTTPS, optional)"]
+  end
+  subgraph Server["Node.js 22 server (server.js)"]
+    MW["Middleware: HTTPS redirect + HSTS, rate limit, origin check, security headers, static allow-list"]
+    ROUTES["routes/*"]
+    CTRL["controllers/*"]
+    SVC["services: auth + password reset, recommendation, nearby search, visits, owner, shortlist, tools"]
+    REPO["repositories/*"]
+    MW --> ROUTES --> CTRL --> SVC --> REPO
+  end
+  DB[("SQLite (WAL): users, sessions, properties + lat/lng, visits, shortlists, password_resets, rate_limits, audit_log")]
+  BK["Verified backups (VACUUM INTO + quick_check)"]
+  CDN["CDN: Leaflet, Pannellum, OpenStreetMap tiles"]
+  MODS -- "fetch /api/*" --> PROXY --> MW
+  REPO --> DB
+  DB --> BK
+  MODS -. "map + 360 viewer (built-in fallback)" .-> CDN

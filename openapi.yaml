@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: NestNavigator RentRight API
+  version: 4.0.0
+  description: >
+    JSON API for rental discovery, recommendations, visit scheduling, owner workflows and account recovery.
+    Authentication uses an HttpOnly, SameSite=Strict session cookie (`nn_session`). Browser mutations must be same-origin.
+    Errors are `{ "error": "message" }`. Request bodies are limited to 12,000 bytes.
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    session:
+      type: apiKey
+      in: cookie
+      name: nn_session
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties: { error: { type: string } }
+    Property:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        area: { type: string }
+        city: { type: string }
+        rent: { type: integer }
+        deposit: { type: integer }
+        maintenance: { type: integer }
+        bhk: { type: integer, minimum: 1, maximum: 3 }
+        furnishing: { type: string }
+        pets: { type: boolean }
+        parking: { type: boolean }
+        lat: { type: number }
+        lng: { type: number }
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        email: { type: string, format: email }
+        role: { type: string, enum: [tenant, owner] }
+  responses:
+    Invalid: { description: Invalid input, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Unauthorized: { description: Missing or expired session, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Forbidden: { description: Role or origin rejected, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    RateLimited: { description: Too many requests (Retry-After header), content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+paths:
+  /api/health:
+    get:
+      summary: Database status and property count
+      responses: { '200': { description: OK } }
+  /api/properties:
+    get:
+      summary: Filtered listings
+      parameters:
+        - { name: maxRent, in: query, schema: { type: integer } }
+        - { name: bhk, in: query, schema: { type: integer, enum: [1, 2, 3] } }
+        - { name: furnishing, in: query, schema: { type: string } }
+        - { name: area, in: query, schema: { type: string } }
+        - { name: pets, in: query, schema: { type: boolean } }
+        - { name: parking, in: query, schema: { type: boolean } }
+        - { name: sort, in: query, schema: { type: string, enum: [featured, low, high] } }
+      responses: { '200': { description: "{ properties, total }" } }
+  /api/properties/compare:
+    get:
+      summary: Compare 2-3 listings
+      parameters: [{ name: ids, in: query, required: true, schema: { type: string, example: '1,4,10' } }]
+      responses: { '200': { description: OK }, '400': { $ref: '#/components/responses/Invalid' } }
+  /api/properties/nearby:
+    get:
+      summary: Listings within a radius, nearest first (haversine)
+      parameters:
+        - { name: lat, in: query, required: true, schema: { type: number } }
+        - { name: lng, in: query, required: true, schema: { type: number } }
+        - { name: radiusKm, in: query, schema: { type: number, minimum: 0.5, maximum: 50, default: 5 } }
+        - { name: maxRent, in: query, schema: { type: integer } }
+        - { name: bhk, in: query, schema: { type: integer } }
+      responses: { '200': { description: "{ center, radiusKm, total, properties[distanceKm] }" }, '400': { $ref: '#/components/responses/Invalid' } }
+  /api/properties/{id}/insight:
+    get:
+      summary: Rent per sq.ft. against the city median
+      parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+      responses: { '200': { description: OK }, '404': { description: Unknown property } }
+  /api/landmarks:
+    get:
+      summary: Landmarks usable as map-search origins
+      responses: { '200': { description: "{ landmarks }" } }
+  /api/tools/affordability:
+    get:
+      summary: Move-in cost and rent-to-income rating
+      parameters:
+        - { name: rent, in: query, required: true, schema: { type: number } }
+        - { name: deposit, in: query, required: true, schema: { type: number } }
+        - { name: maintenance, in: query, required: true, schema: { type: number } }
+        - { name: income, in: query, required: true, schema: { type: number } }
+      responses: { '200': { description: OK }, '400': { $ref: '#/components/responses/Invalid' } }
+  /api/tools/commute:
+    get:
+      summary: Illustrative commute estimate
+      parameters:
+        - { name: propertyId, in: query, required: true, schema: { type: integer } }
+        - { name: mode, in: query, schema: { type: string, enum: [car, transit, walk] } }
+        - { name: destination, in: query, schema: { type: string } }
+      responses: { '200': { description: OK }, '400': { $ref: '#/components/responses/Invalid' } }
+  /api/neighborhoods:
+    get:
+      summary: Neighbourhood scorecards (illustrative)
+      responses: { '200': { description: OK } }
+  /api/neighborhoods/{area}:
+    get:
+      summary: One neighbourhood scorecard
+      parameters: [{ name: area, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: OK }, '404': { description: Unknown area } }
+  /api/recommendations:
+    get:
+      summary: Top five weighted matches with reasons
+      parameters:
+        - { name: budget, in: query, required: true, schema: { type: integer, minimum: 1, maximum: 1000000 } }
+        - { name: bhk, in: query, required: true, schema: { type: integer, minimum: 1, maximum: 3 } }
+        - { name: area, in: query, schema: { type: string } }
+        - { name: pets, in: query, schema: { type: boolean } }
+        - { name: parking, in: query, schema: { type: boolean } }
+      responses: { '200': { description: "{ matches[matchScore, matchReasons], criteria }" }, '400': { $ref: '#/components/responses/Invalid' } }
+  /api/auth/register:
+    post:
+      summary: Create a tenant or owner account
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [name, email, password, role], properties: { name: { type: string }, email: { type: string }, password: { type: string, minLength: 10 }, role: { type: string, enum: [tenant, owner] } } } } }
+      responses: { '201': { description: Created }, '400': { $ref: '#/components/responses/Invalid' }, '409': { description: Email already registered } }
+  /api/auth/login:
+    post:
+      summary: Sign in (sets session cookie)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [email, password], properties: { email: { type: string }, password: { type: string } } } } }
+      responses: { '200': { description: Signed in }, '401': { $ref: '#/components/responses/Unauthorized' }, '429': { $ref: '#/components/responses/RateLimited' } }
+  /api/auth/logout:
+    post:
+      summary: Invalidate the session
+      responses: { '200': { description: Signed out } }
+  /api/auth/me:
+    get:
+      summary: Current user
+      security: [{ session: [] }]
+      responses: { '200': { description: "{ user }" }, '401': { $ref: '#/components/responses/Unauthorized' } }
+  /api/auth/change-password:
+    post:
+      summary: Change password (signed in)
+      security: [{ session: [] }]
+      responses: { '200': { description: Changed }, '400': { $ref: '#/components/responses/Invalid' }, '401': { $ref: '#/components/responses/Unauthorized' } }
+  /api/auth/forgot-password:
+    post:
+      summary: Request a reset link (identical response for any email)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [email], properties: { email: { type: string } } } } }
+      responses: { '200': { description: Always the same message }, '429': { $ref: '#/components/responses/RateLimited' } }
+  /api/auth/reset-password:
+    post:
+      summary: Set a new password with a single-use token (revokes all sessions)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [token, newPassword], properties: { token: { type: string }, newPassword: { type: string } } } } }
+      responses: { '200': { description: Updated }, '400': { $ref: '#/components/responses/Invalid' }, '429': { $ref: '#/components/responses/RateLimited' } }
+  /api/visits:
+    post:
+      summary: Request a visit (public; 409 if the slot is taken)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [propertyId, name, email, date, time] } } }
+      responses: { '201': { description: Requested }, '400': { $ref: '#/components/responses/Invalid' }, '409': { description: Slot already booked } }
+  /api/owner/properties/claim:
+    post:
+      summary: Owner claims an unassigned listing
+      security: [{ session: [] }]
+      responses: { '200': { description: Claimed }, '403': { $ref: '#/components/responses/Forbidden' }, '409': { description: Already claimed } }
+  /api/owner/visits:
+    get:
+      summary: Visit requests for the owner's listings (visitor email masked)
+      security: [{ session: [] }]
+      responses: { '200': { description: "{ visits }" }, '401': { $ref: '#/components/responses/Unauthorized' }, '403': { $ref: '#/components/responses/Forbidden' } }
+  /api/owner/visits/{id}:
+    patch:
+      summary: Confirm, decline or complete a visit
+      security: [{ session: [] }]
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: Updated }, '404': { description: Not this owner's visit } }
+  /api/shortlist:
+    get:
+      summary: Saved property ids
+      security: [{ session: [] }]
+      responses: { '200': { description: "{ propertyIds }" }, '401': { $ref: '#/components/responses/Unauthorized' } }
+    post:
+      summary: Save a property
+      security: [{ session: [] }]
+      responses: { '201': { description: "{ propertyIds }" }, '401': { $ref: '#/components/responses/Unauthorized' } }
+  /api/shortlist/{propertyId}:
+    delete:
+      summary: Remove a saved property
+      security: [{ session: [] }]
+      parameters: [{ name: propertyId, in: path, required: true, schema: { type: integer } }]
+      responses: { '200': { description: "{ propertyIds }" }, '401': { $ref: '#/components/responses/Unauthorized' } }

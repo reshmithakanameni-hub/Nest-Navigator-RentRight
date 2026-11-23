@@ -1,0 +1,141 @@
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f6f5f0;color:#182b24;font-family:"DM Sans",sans-serif}a{color:inherit;text-decoration:none}.top{height:82px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;background:#102820;color:#fff;position:sticky;top:0;z-index:10}.logo{display:flex;gap:10px;align-items:center;font:800 22px Manrope}.logo>span{display:flex;flex-direction:column}.logo span span{color:#d5b982}.logo small{font:600 8px "DM Sans";letter-spacing:2px;color:#b7c5bd;margin-top:3px}.top nav{display:flex;gap:30px;font-size:13px;color:#dce4df}.top nav a:hover{color:#e1c58f}.top nav b{background:#d8bd88;color:#14291f;border-radius:20px;padding:2px 7px}.menu{display:none}.hero{background:#102820;color:white;padding:75px 8% 65px;display:grid;grid-template-columns:1fr 1fr;gap:7%;align-items:center;min-height:550px}.eyebrow,.heading label,.tool>label,.visit-intro>label,.agreement label:first-child{font-size:10px;font-weight:800;letter-spacing:2px;color:#b58d50}.hero h1{font:800 clamp(42px,5.4vw,70px)/1.12 Manrope;letter-spacing:-3px;margin:22px 0}.hero h1 i,h2 i{font-family:Georgia,serif;font-weight:400;color:#d7bd8c}.hero-copy>p{max-width:470px;color:#c7d1cb;line-height:1.8}.actions{display:flex;gap:25px;align-items:center;margin:30px 0}.btn{border:0;border-radius:3px;padding:14px 20px;font-weight:700;font-size:12px;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.light{background:#e4cca0;color:#172c23}.dark{background:#17372c;color:white}.outline{border:1px solid #b8bdb5;background:transparent;color:#19352a}.textlink{font-size:12px;color:#e2d1ae}.stats{display:flex;gap:38px;margin-top:50px}.stats div{display:flex;flex-direction:column;gap:5px}.stats strong{font:700 23px Manrope}.stats small{color:#aebdb4;font-size:10px}.hero-image{height:390px;position:relative;background:linear-gradient(0deg,#10282055,#10282000),url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85') center/cover}.float{position:absolute;left:-35px;bottom:45px;background:#fff;color:#17352a;padding:15px 19px;display:flex;gap:12px;align-items:center;box-shadow:0 10px 30px #0002}.float>span{display:flex;flex-direction:column;gap:4px}.float small{color:#78837c;font-size:10px}.image-note{position:absolute;right:18px;bottom:16px;color:white;font-size:9px;letter-spacing:2px}.trust{display:flex;justify-content:space-around;gap:15px;padding:22px 6%;background:#eae9e1;color:#45574d;font-size:11px;font-weight:700}.section{padding:85px 8%}.heading{display:flex;align-items:end;justify-content:space-between;margin-bottom:30px}.heading h2,.tour-band h2,.visit-intro h2{font:800 clamp(29px,3.4vw,43px)/1.2 Manrope;letter-spacing:-1.5px;margin:12px 0;color:#19352a}.heading h2 i{color:#b18b52}.heading>p{color:#7c877f;font-size:12px}.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}.filters input:not([type=checkbox]),.filters select,.agreement-controls input,.agreement-controls select{padding:13px;border:1px solid #dedfd8;background:#fff;min-width:145px;flex:1;color:#273c32;border-radius:3px}.filters input:first-child{min-width:220px}.check{display:flex;gap:7px;align-items:center;font-size:11px;color:#657269}.muted{font-size:11px;color:#7d887f}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.property{background:white;border:1px solid #e8e8e1;transition:.25s}.property:hover{transform:translateY(-5px);box-shadow:0 14px 35px #142c2014}.photo{height:205px;position:relative;background-size:cover;background-position:center}.verified,.bhk-tag{position:absolute;top:13px;background:#fff;padding:7px 10px;font-size:9px;font-weight:800}.verified{left:13px;color:#1c6848}.bhk-tag{right:13px}.heart{position:absolute;right:13px;bottom:13px;border:0;border-radius:50%;width:36px;height:36px;background:white;font-size:20px;cursor:pointer}.heart.saved{color:#c05b54}.property-body{padding:19px}.area{font-size:10px;color:#a17c47;text-transform:uppercase;letter-spacing:1px}.property h3{font:700 18px Manrope;margin:7px 0}.meta{display:flex;gap:12px;flex-wrap:wrap;color:#7d8980;font-size:10px;padding:12px 0;border-bottom:1px solid #eee}.price-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px}.price{font:800 19px Manrope}.price small{font:400 10px "DM Sans";color:#78847c}.card-actions{display:flex;gap:8px;margin-top:14px}.card-actions button{flex:1;padding:10px;border:1px solid #d8ddd6;background:white;color:#29483a;font-size:10px;cursor:pointer}.card-actions button:last-child{background:#17372c;color:#fff}.empty{color:#818b82;padding:30px;text-align:center}.tour-band{padding:70px 8%;background:#18372c;color:#fff;display:grid;grid-template-columns:1fr 1.2fr;gap:7%;align-items:center}.tour-band h2{color:#fff}.tour-band p{color:#c2cec6;line-height:1.8;font-size:13px}.tour-band small{display:block;margin-top:14px;color:#aab9b0;font-size:10px}.tour-preview{height:320px;background:url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85') center/cover;display:flex;align-items:end;padding:20px;font-size:10px;letter-spacing:2px}.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.tool{background:#fff;padding:26px;border:1px solid #e8e8e1}.tool h3{font:700 21px Manrope;margin:12px 0}.tool>p{font-size:12px;color:#7b877e;line-height:1.6}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tool label:not(:first-child),form>label,.two label,.agreement-controls label{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#59685f;margin:13px 0}.tool input,.tool select,form input,form select,.agreement-controls input,.agreement-controls select{padding:12px;border:1px solid #dfe2dc;border-radius:3px;background:#fff;font:12px "DM Sans";width:100%}.tool .btn{margin-top:12px}.total{margin-top:18px;background:#f1f3ed;padding:18px}.total small{font-size:9px;letter-spacing:1.5px;color:#7c887e}.total strong{display:block;font:800 28px Manrope;margin:5px 0}.total p,.result{font-size:11px;color:#52715f}.compare-result{padding:15px;background:#f3f4ef;font-size:11px;line-height:1.8;min-height:90px}.scores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.score{background:#f2f3ed;padding:13px}.score b{display:block;font:700 20px Manrope}.score span{font-size:10px;color:#6f7d73}.visit-section{background:#e9e9df;display:grid;grid-template-columns:1fr 1fr;gap:9%;align-items:start}.visit-intro h2{margin-top:16px}.visit-intro p{font-size:13px;line-height:1.8;color:#6d7a70}.visit-note{margin-top:35px;color:#477052;font-size:11px;font-weight:700}form{background:#fff;padding:28px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.agreement-controls{display:grid;grid-template-columns:2fr 2fr 1.5fr auto;gap:12px;align-items:end}.lease-preview{background:#fff;border:1px solid #e5e5dc;padding:28px;margin:22px 0;min-height:100px;font-size:12px;line-height:1.8}.lease-preview h3{text-align:center}.lease-preview p{margin:8px 0}footer{background:#102820;color:#b7c4bc;padding:35px 8%;display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:10px}footer p{max-width:260px}.modal{position:fixed;inset:0;background:#08150fd9;z-index:20;display:grid;place-items:center;padding:20px}.modal-card{position:relative;background:#fff;width:min(900px,100%);max-height:90vh;overflow:auto;padding:30px}.close{position:absolute;right:15px;top:10px;border:0;background:none;font-size:30px;cursor:pointer}.modal-card h2{font-family:Manrope}.panorama{height:450px;width:100%;background:#152c23}.toast{position:fixed;bottom:22px;right:22px;background:#17372c;color:white;padding:13px 18px;font-size:12px;z-index:30;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}@media(max-width:850px){.top{padding:0 5%}.top nav{gap:12px;font-size:11px}.hero{padding:55px 6%;gap:4%}.section{padding:65px 6%}.cards{grid-template-columns:repeat(2,1fr)}.agreement-controls{grid-template-columns:1fr 1fr}.trust{flex-wrap:wrap}.visit-section{gap:4%}}@media(max-width:600px){.top nav{display:none}.menu{display:block;background:none;border:0;color:white;font-size:23px}.hero{grid-template-columns:1fr}.hero-image{height:270px;margin:15px 0 0 15px}.float{left:-15px}.stats{gap:22px}.trust{justify-content:flex-start}.heading{display:block}.heading>p{margin-top:8px}.cards,.tools-grid,.tour-band,.visit-section{grid-template-columns:1fr}.filters>*{min-width:calc(50% - 8px)!important}.filters input:first-child{min-width:100%!important}.tour-preview{height:240px}.fields,.two{grid-template-columns:1fr 1fr}.agreement-controls{grid-template-columns:1fr}.section{padding:55px 5%}footer{display:block}footer p{max-width:none}.modal-card{padding:25px 16px}.panorama{height:300px}}
+
+/* Keep closed dialogs hidden; .modal uses display:grid for open dialogs. */
+.modal[hidden] {
+  display: none !important;
+}
+
+/* Refined property-filter layout: prevents checkbox and Reset overlap */
+#homes .filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  margin-bottom: 18px;
+}
+
+#homes .filters > input:not([type="checkbox"]),
+#homes .filters > select {
+  flex: 1 1 145px;
+  width: auto;
+  min-width: 0;
+  height: 48px;
+  padding: 0 14px;
+}
+
+#homes .filters > #search {
+  flex: 2 1 220px;
+}
+
+#homes .filters > .check {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: max-content;
+  min-height: 44px;
+  margin: 0;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #53645a;
+}
+
+#homes .filters > .check input {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin: 0;
+  accent-color: #17372c;
+}
+
+#homes .filters > #reset {
+  flex: 0 0 auto;
+  min-width: 90px;
+  height: 46px;
+  padding: 0 20px;
+  white-space: nowrap;
+}
+
+@media (max-width: 650px) {
+  #homes .filters {
+    gap: 10px;
+  }
+
+  #homes .filters > input:not([type="checkbox"]),
+  #homes .filters > select {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 0 !important;
+  }
+
+  #homes .filters > #search {
+    flex: 1 1 100%;
+  }
+
+  #homes .filters > .check {
+    flex: 1 1 auto;
+    min-width: 0 !important;
+    min-height: 42px;
+  }
+
+  #homes .filters > #reset {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 0 !important;
+    width: auto;
+  }
+}
+.account-section{background:#f2f2eb}.account-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}.account-grid form{border:1px solid #e5e7df;box-shadow:0 10px 30px #142c2008}.owner-panel{min-height:100%;}.owner-panel .btn{margin:8px 8px 8px 0}@media(max-width:650px){.account-grid{grid-template-columns:1fr}}
+
+@media(max-width:600px){
+  .top nav.mobile-open{
+    display:flex;position:absolute;top:82px;left:0;right:0;padding:18px 6%;
+    background:#102820;flex-direction:column;gap:16px;z-index:12;
+  }
+}
+
+/* Smart Matching: preferred area gets a full row; preference checkboxes share the next row */
+.fields > label:has(#matchArea) {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.fields > label:has(#matchArea) input#matchArea {
+  width: 100%;
+  min-width: 0;
+}
+
+.fields > label:has(#matchPets),
+.fields > label:has(#matchParking) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  margin: 4px 0 12px;
+  white-space: nowrap;
+}
+
+.fields input#matchPets,
+.fields input#matchParking {
+  width: 17px;
+  min-width: 17px;
+  height: 17px;
+  margin: 0;
+  flex: 0 0 17px;
+  accent-color: #17372c;
+}
+
+/* Keeps the 360 viewer box height regardless of stylesheet order. */
+#pano.panorama{height:450px;min-height:300px;width:100%}
+@media (max-width:760px){#pano.panorama{height:300px}}
+
+/* Map search */
+.map-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-top:20px}
+#nearMap{height:420px;border-radius:6px;z-index:0}
+.near-results{max-height:420px;overflow:auto;display:grid;gap:10px;align-content:start}
+.near-item{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fff;border:1px solid #dcdad0;padding:12px 14px}
+.near-item .btn{padding:6px 12px;font-size:12px;margin-top:4px}
+@media (max-width:760px){.map-grid{grid-template-columns:1fr}#nearMap{height:300px}}
+.reset-panel{background:#fff;border:1px solid #dcdad0;padding:14px;margin-top:12px;display:grid;gap:10px}

@@ -1,0 +1,20 @@
+# Render.com blueprint: New + > Blueprint, point at this repository. Docker image, HTTPS provided by Render.
+services:
+  - type: web
+    name: nestnavigator
+    runtime: docker
+    plan: starter            # a persistent disk needs a paid plan; the free plan loses SQLite data on restart
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "true"
+      - key: FORCE_HTTPS
+        value: "true"
+      - key: DB_PATH
+        value: /app/data/nestnavigator.sqlite
+    disk:
+      name: nestnavigator-data
+      mountPath: /app/data
+      sizeGB: 1
